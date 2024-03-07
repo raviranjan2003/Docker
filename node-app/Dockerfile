@@ -7,8 +7,11 @@ FROM node:21-alpine
 WORKDIR /usr/app
 
 # Download and install the dependency
-COPY ./ ./
+## This line prevents from re-running of npm install command, 
+## without any changes to our dependency or package.json file
+COPY ./package.json ./
 RUN npm install
+COPY ./ ./
 
 # but here is a problem, as we are using alpine as a base-image
 # alpine is a very small image, which doesn't have npm pre-install
