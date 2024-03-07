@@ -4,6 +4,8 @@
 # we use alpine version of node ==> as small/compact as possible
 FROM node:21-alpine
 
+WORKDIR /usr/app
+
 # Download and install the dependency
 COPY ./ ./
 RUN npm install
