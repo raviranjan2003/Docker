@@ -3,17 +3,27 @@ const redis = require('redis');
 
 const app = express();
 
-const client = redis.createClient();
-//initialize visits to be 0
-client.set('visits', 0);
+const client = redis.createClient({
+    host: 'redis-server',
+    port: 6379,
+});
 
-app.get("/",(req,res)=>{
+// const redisConnect = async () => {
+    // client.connect();
+    // }
+    
+    // redisConnect();
+    
+    //initialize visits to be 0
+    client.set('visits', 0);
+
+app.get('/',(req,res)=>{
     client.get('visits', (err,visits)=>{
-        res.send("Number of visits : ", visits);
+        res.send("Number of visits : " + visits);
         client.set('visits', parseInt(visits)+1);
     })
 })
 
-app.listen(8080,()=>{
-    console.log("Server listening on port 8080:");
+app.listen(8081,()=>{
+    console.log("Server listening on port 8081:");
 })
